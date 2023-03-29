@@ -17,4 +17,6 @@ public interface ProjectService {
     Project updateProject(Project project) throws ExternalServiceException, ProjectNotFoundException;
 
     Project deleteProject(Long id) throws ExternalServiceException;
+
+    List<Project> getByAreas(List<String> areas);
 }

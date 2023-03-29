@@ -11,10 +11,10 @@ import javax.validation.constraints.Size;
 public class ProjectRequestDto {
 
     @NotBlank
-    @Size(max = 250)
+    @Size(min = 5, max = 250)
     private String title;
 
     @NotBlank
-    @Size(max = 250)
+    @Size(min = 5, max = 250)
     private String description;
 }

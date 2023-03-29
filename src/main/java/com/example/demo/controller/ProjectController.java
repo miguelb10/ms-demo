@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -44,7 +43,6 @@ public class ProjectController {
 
     @GetMapping("/list")
     public List<Project> list(@Valid @ModelAttribute ProjectFilterRequestDto request) {
-        System.out.println(request.getArea());
-        return projectService.getAll();
+        return projectService.getByAreas(request.getAreas());
     }
 }

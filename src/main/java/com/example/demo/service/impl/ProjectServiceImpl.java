@@ -65,6 +65,11 @@ public class ProjectServiceImpl implements ProjectService {
         return null;
     }
 
+    @Override
+    public List<Project> getByAreas(List<String> areas) {
+        return repository.findByAreaNames(areas);
+    }
+
     private String generatePermalink(String title) {
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
