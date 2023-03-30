@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
 @Constraint(validatedBy = EachEnumValidator.class)
 public @interface ValidEachEnum {
 
-    String message() default "Invalid enum";
+    String message() default "msg.error.generic.enum";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
     Class<? extends Enum> enumClass();

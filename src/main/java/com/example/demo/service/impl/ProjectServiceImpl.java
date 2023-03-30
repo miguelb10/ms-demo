@@ -6,6 +6,8 @@ import com.example.demo.exception.ProjectNotFoundException;
 import com.example.demo.repository.ProjectRepository;
 import com.example.demo.service.ExternalService;
 import com.example.demo.service.ProjectService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -67,7 +69,12 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public List<Project> getByAreas(List<String> areas) {
-        return repository.findByAreaNames(areas);
+        return repository.findByAreas(areas);
+    }
+
+    @Override
+    public Page<Project> getByAreasWithPagination(List<String> areas, Integer pageNumber) {
+        return repository.findByAreasPageable(areas, PageRequest.of(pageNumber, 10));
     }
 
     private String generatePermalink(String title) {

@@ -8,6 +8,7 @@ import com.example.demo.exception.ProjectNotFoundException;
 import com.example.demo.service.ProjectService;
 import com.example.demo.util.EntityUtilities;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,5 +45,10 @@ public class ProjectController {
     @GetMapping("/list")
     public List<Project> list(@Valid @ModelAttribute ProjectFilterRequestDto request) {
         return projectService.getByAreas(request.getAreas());
+    }
+
+    @GetMapping("/list/{pageNumber}")
+    public Page<Project> listWithPagination(@Valid @ModelAttribute ProjectFilterRequestDto request, @PathVariable("pageNumber") Integer pageNumber) {
+        return projectService.getByAreasWithPagination(request.getAreas(), pageNumber);
     }
 }
