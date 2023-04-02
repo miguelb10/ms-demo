@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 public class EntityUtilities {
 
-    private static ObjectMapper objectMapper;
+    private static final ObjectMapper objectMapper;
 
     private static final Logger log = LoggerFactory.getLogger(EntityUtilities.class);
 

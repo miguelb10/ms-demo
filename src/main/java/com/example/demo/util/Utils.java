@@ -7,6 +7,7 @@ public class Utils {
     private Utils() {
         throw new IllegalStateException("Utility class");
     }
+
     private static final Random random = new Random();
 
     public static String generatePermalink(String title) {
