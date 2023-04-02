@@ -17,8 +17,12 @@ import javax.validation.constraints.Size;
 @Validated
 public class CompanyController {
 
+    private final CompanyService companyService;
+
     @Autowired
-    private CompanyService companyService;
+    public CompanyController(CompanyService companyService) {
+        this.companyService = companyService;
+    }
 
     @GetMapping("/{permalink}")
     public Company get(@PathVariable("permalink") @NotBlank @Size(min = 5, max = 99) String permalink) {

@@ -15,8 +15,12 @@ import javax.validation.Valid;
 @RequestMapping("/v1/user")
 public class UserController {
 
-    @Autowired
     private UserService userService;
+
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/login")
     public User login(@Valid @RequestBody LoginRequestDto loginRequestDto) {

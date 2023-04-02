@@ -74,21 +74,3 @@ insert into contact (name, phone, email) values ('Juan', '123456789', 'juan@test
 select * from contact
 
 
-[select
-	distinct p
-from
-	com.example.demo.entity.Project p
-left join p.areas a
-left join p.capacities c
-where
-	(:areas_0,
-	:areas_1 is null
-		or a.name in (:areas_0, :areas_1))
-	and (:capacities_0,
-	:capacities_1 is null
-		or c.unit in (:capacities_0, :capacities_1))
-order by
-	p.id asc]
-
-
-

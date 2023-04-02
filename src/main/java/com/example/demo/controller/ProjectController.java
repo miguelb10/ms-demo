@@ -22,11 +22,15 @@ import java.util.List;
 @Validated
 public class ProjectController {
 
+    private final ProjectService projectService;
+
     @Autowired
-    private ProjectService projectService;
+    public ProjectController(ProjectService projectService) {
+        this.projectService = projectService;
+    }
 
     @GetMapping("/{permalink}")
-    public Project get(@PathVariable("permalink") @NotBlank @Size(min = 5, max = 99) String permalink) throws ProjectNotFoundException {
+    public Project get(@PathVariable @NotBlank @Size(min = 5, max = 99) String permalink) throws ProjectNotFoundException {
         return projectService.getByPermalink(permalink);
     }
 
@@ -36,12 +40,12 @@ public class ProjectController {
     }
 
     @DeleteMapping("/{permalink}")
-    public Project delete(@PathVariable("permalink") @NotBlank @Size(min = 5, max = 99) String permalink) throws ProjectNotFoundException, ProjectDeleteException {
+    public Project delete(@PathVariable @NotBlank @Size(min = 5, max = 99) String permalink) throws ProjectNotFoundException, ProjectDeleteException {
         return projectService.delete(permalink);
     }
 
     @PutMapping("/{permalink}")
-    public Project edit(@Valid @RequestBody ProjectRequestDto request, @PathVariable("permalink") @NotBlank @Size(min = 5, max = 99) String permalink) throws ExternalServiceException, ProjectNotFoundException {
+    public Project edit(@Valid @RequestBody ProjectRequestDto request, @PathVariable @NotBlank @Size(min = 5, max = 99) String permalink) throws ExternalServiceException, ProjectNotFoundException {
         Project project = EntityUtilities.copyObjectFrom(request, Project.class);
         project.setPermalink(permalink);
         return projectService.update(project);
@@ -53,7 +57,7 @@ public class ProjectController {
     }
 
     @GetMapping("/list-using-query/{pageNumber}")
-    public Page<Project> listUsingQueryWithPagination(@Valid @ModelAttribute ProjectFilterRequestDto request, @PathVariable("pageNumber") Integer pageNumber) {
+    public Page<Project> listUsingQueryWithPagination(@Valid @ModelAttribute ProjectFilterRequestDto request, @PathVariable Integer pageNumber) {
         return projectService.getByAreasAndCapacitiesUsingQueryWithPagination(request.getAreas(), request.getCapacities(), pageNumber);
     }
 
