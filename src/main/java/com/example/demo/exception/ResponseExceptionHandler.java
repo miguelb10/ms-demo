@@ -5,6 +5,7 @@ import com.example.demo.util.MessageSourceUtilities;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -76,6 +77,27 @@ public class ResponseExceptionHandler {
     public final MessageResponseDto handleBindException(BindException exception) {
         log.error("handleBindException", exception.getCause());
         return new MessageResponseDto(MessageSourceUtilities.getValue("msg.error.bad.request"), getErrors(exception.getBindingResult()));
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(ProjectDeleteException.class)
+    public final MessageResponseDto handleProjectDeleteException(ProjectDeleteException exception) {
+        log.error("handleProjectDeleteException", exception.getCause());
+        return new MessageResponseDto(MessageSourceUtilities.getValue("msg.error.project.delete"));
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public final MessageResponseDto handleHttpMessageNotReadableException(HttpMessageNotReadableException exception) {
+        log.error("handleHttpMessageNotReadableException", exception.getCause());
+        return new MessageResponseDto(MessageSourceUtilities.getValue("msg.error.invalid.request.body"));
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(ContactNotFoundException.class)
+    public final MessageResponseDto handleContactNotFoundException(ContactNotFoundException exception) {
+        log.error("handleContactNotFoundException", exception.getCause());
+        return new MessageResponseDto(MessageSourceUtilities.getValue("msg.error.contact.not.found"));
     }
 
     private List<String> getErrors(BindingResult bindingResult) {

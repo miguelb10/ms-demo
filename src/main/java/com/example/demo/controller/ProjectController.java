@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.controller.dto.ProjectFilterRequestDto;
 import com.example.demo.controller.dto.ProjectRequestDto;
 import com.example.demo.entity.Project;
+import com.example.demo.exception.ProjectDeleteException;
 import com.example.demo.exception.ExternalServiceException;
 import com.example.demo.exception.ProjectNotFoundException;
 import com.example.demo.service.ProjectService;
@@ -13,8 +14,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.util.List;
 
 @RestController
@@ -32,23 +32,33 @@ public class ProjectController {
 
     @PostMapping("/create")
     public Project create(@Valid @RequestBody ProjectRequestDto request) throws ExternalServiceException {
-        return projectService.createProject(EntityUtilities.copyObjectFrom(request, Project.class));
+        return projectService.create(EntityUtilities.copyObjectFrom(request, Project.class));
     }
 
-    @PostMapping("/edit/{permalink}")
+    @DeleteMapping("/{permalink}")
+    public Project delete(@PathVariable("permalink") @NotBlank @Size(min = 5, max = 99) String permalink) throws ProjectNotFoundException, ProjectDeleteException {
+        return projectService.delete(permalink);
+    }
+
+    @PutMapping("/{permalink}")
     public Project edit(@Valid @RequestBody ProjectRequestDto request, @PathVariable("permalink") @NotBlank @Size(min = 5, max = 99) String permalink) throws ExternalServiceException, ProjectNotFoundException {
         Project project = EntityUtilities.copyObjectFrom(request, Project.class);
         project.setPermalink(permalink);
-        return projectService.updateProject(project);
+        return projectService.update(project);
+    }
+
+    @GetMapping("/list-using-query")
+    public List<Project> listUsingQuery(@Valid @ModelAttribute ProjectFilterRequestDto request) {
+        return projectService.getByAreasAndCapacitiesUsingQuery(request.getAreas(), request.getCapacities());
+    }
+
+    @GetMapping("/list-using-query/{pageNumber}")
+    public Page<Project> listUsingQueryWithPagination(@Valid @ModelAttribute ProjectFilterRequestDto request, @PathVariable("pageNumber") Integer pageNumber) {
+        return projectService.getByAreasAndCapacitiesUsingQueryWithPagination(request.getAreas(), request.getCapacities(), pageNumber);
     }
 
     @GetMapping("/list")
-    public List<Project> list(@Valid @ModelAttribute ProjectFilterRequestDto request) {
-        return projectService.getByAreas(request.getAreas());
-    }
-
-    @GetMapping("/list/{pageNumber}")
-    public Page<Project> listWithPagination(@Valid @ModelAttribute ProjectFilterRequestDto request, @PathVariable("pageNumber") Integer pageNumber) {
-        return projectService.getByAreasWithPagination(request.getAreas(), pageNumber);
+    public List<Project> listWithoutQuery(@Valid @ModelAttribute ProjectFilterRequestDto request) {
+        return projectService.getByAreasAndCapacities(request.getAreas(), request.getCapacities());
     }
 }

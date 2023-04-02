@@ -32,4 +32,12 @@ public class Project implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "area_id")
     )
     private List<Area> areas = new ArrayList<>();
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "project_capacity",
+            joinColumns = @JoinColumn(name = "project_id"),
+            inverseJoinColumns = @JoinColumn(name = "capacity_id")
+    )
+    private List<Capacity> capacities = new ArrayList<>();
 }

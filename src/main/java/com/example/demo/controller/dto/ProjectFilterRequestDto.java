@@ -15,7 +15,9 @@ import java.util.List;
 @Setter
 public class ProjectFilterRequestDto {
 
-    private List<@Size(min = 1, max = 10) String> areas;
+    private List<@Size(min = 3, max = 10) String> areas;
+
+    private List<@Size(min = 1, max = 10) String> capacities;
 
     @ValidEachEnum(enumClass = ProjectStatusEnum.class, message = "msg.error.project.status.enum")
     private List<String> status;

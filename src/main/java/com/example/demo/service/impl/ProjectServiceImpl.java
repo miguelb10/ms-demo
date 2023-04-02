@@ -1,23 +1,25 @@
 package com.example.demo.service.impl;
 
+import static com.example.demo.util.Utils.generatePermalink;
+
 import com.example.demo.entity.Project;
+import com.example.demo.exception.ProjectDeleteException;
 import com.example.demo.exception.ExternalServiceException;
 import com.example.demo.exception.ProjectNotFoundException;
 import com.example.demo.repository.ProjectRepository;
 import com.example.demo.service.ExternalService;
 import com.example.demo.service.ProjectService;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 @Service
 public class ProjectServiceImpl implements ProjectService {
-
-    private static final Random random = new Random();
 
     private final ProjectRepository repository;
 
@@ -44,7 +46,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     @Transactional(rollbackFor = {ExternalServiceException.class})
-    public Project createProject(Project project) throws ExternalServiceException {
+    public Project create(Project project) throws ExternalServiceException {
         project.setPermalink(generatePermalink(project.getTitle()));
         Project newProject = repository.save(project);
         externalService.saveProject(newProject);
@@ -53,7 +55,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     @Transactional(rollbackFor = {ExternalServiceException.class})
-    public Project updateProject(Project project) throws ExternalServiceException, ProjectNotFoundException {
+    public Project update(Project project) throws ExternalServiceException, ProjectNotFoundException {
         Project currentProject = getByPermalink(project.getPermalink());
         currentProject.setTitle(project.getTitle());
         currentProject.setDescription(project.getDescription());
@@ -63,30 +65,31 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Project deleteProject(Long id) throws ExternalServiceException {
-        return null;
-    }
-
-    @Override
-    public List<Project> getByAreas(List<String> areas) {
-        return repository.findByAreas(areas);
-    }
-
-    @Override
-    public Page<Project> getByAreasWithPagination(List<String> areas, Integer pageNumber) {
-        return repository.findByAreasPageable(areas, PageRequest.of(pageNumber, 10));
-    }
-
-    private String generatePermalink(String title) {
-        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-        StringBuilder sb = new StringBuilder(title.length());
-
-        for (int i = 0; i < title.length(); i++) {
-            int randomIndex = random.nextInt(characters.length());
-            char randomChar = characters.charAt(randomIndex);
-            sb.append(randomChar);
+    public Project delete(String permalink) throws ProjectNotFoundException, ProjectDeleteException {
+        Project project = getByPermalink(permalink);
+        try {
+            repository.delete(project);
+        } catch (DataIntegrityViolationException ex) {
+            throw new ProjectDeleteException("We couldn't delete project [" + permalink + "]");
         }
-        return sb.toString().concat("-").concat(title);
+        return project;
     }
+
+    @Override
+    public List<Project> getByAreasAndCapacitiesUsingQuery(List<String> areas, List<String> capacities) {
+        return repository.findByAreasAndCapacities(areas, capacities);
+    }
+
+    @Override
+    public Page<Project> getByAreasAndCapacitiesUsingQueryWithPagination(List<String> areas, List<String> capacities, Integer pageNumber) {
+        return repository.findByAreasAndCapacitiesPageable(areas, capacities, PageRequest.of(pageNumber, 10));
+    }
+
+    @Override
+    public List<Project> getByAreasAndCapacities(List<String> areas, List<String> capacities) {
+        var areaNames = areas == null ? new ArrayList<String>() : areas;
+        var capacityUnits = capacities == null ? new ArrayList<String>() : capacities;
+        return repository.findDistinctByAreasNameInAndCapacitiesUnitIn(areaNames, capacityUnits);
+    }
+
 }

@@ -1,0 +1,319 @@
+{
+	"info": {
+		"_postman_id": "67f1ed6e-42e3-4153-86fc-3c396a128ac7",
+		"name": "Ms-demo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create project",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"newproj\",\r\n    \"description\": \"prueba\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/project/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"project",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit project",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"testtt\",\r\n    \"description\": \"pruebaaaa\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/project/7MufbIm-newproj",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"project",
+						"7MufbIm-newproj"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get project by permalink",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/v1/project/6KZEPz2-project",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"project",
+						"6KZEPz2-project"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Project list without query",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "areas",
+						"value": "Peru",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/project/list?areas=Chile&status=&sectors=ENERGY&stage=&capacities=m",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"project",
+						"list"
+					],
+					"query": [
+						{
+							"key": "areas",
+							"value": "Chile"
+						},
+						{
+							"key": "status",
+							"value": ""
+						},
+						{
+							"key": "sectors",
+							"value": "ENERGY"
+						},
+						{
+							"key": "stage",
+							"value": ""
+						},
+						{
+							"key": "capacities",
+							"value": "m"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Project list using query and pagination",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/v1/project/list-using-query/0?areas=Peru,Chile&capacities=km,m",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"project",
+						"list-using-query",
+						"0"
+					],
+					"query": [
+						{
+							"key": "areas",
+							"value": "Peru,Chile"
+						},
+						{
+							"key": "status",
+							"value": "ATC",
+							"disabled": true
+						},
+						{
+							"key": "sectors",
+							"value": "ENERGYD",
+							"disabled": true
+						},
+						{
+							"key": "stage",
+							"value": "F",
+							"disabled": true
+						},
+						{
+							"key": "capacities",
+							"value": "km,m"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Project list using query",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/v1/project/list-using-query?status=&sectors=ENERGY&stage=&includeAreas=false",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"project",
+						"list-using-query"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": ""
+						},
+						{
+							"key": "sectors",
+							"value": "ENERGY"
+						},
+						{
+							"key": "stage",
+							"value": ""
+						},
+						{
+							"key": "areas",
+							"value": "",
+							"disabled": true
+						},
+						{
+							"key": "capacities",
+							"value": "m,km",
+							"disabled": true
+						},
+						{
+							"key": "includeAreas",
+							"value": "false"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete project",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/v1/project/6KZEPz2-project",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"project",
+						"6KZEPz2-project"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create company",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"company\",\r\n    \"description\": \"company\",\r\n    \"contacts\": [1]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/company/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"company",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get company by permalink",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/v1/company/KnGbKNu-company",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"company",
+						"KnGbKNu-company"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -15,11 +15,19 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
 
     Project findByPermalink(String permalink);
 
-    @Query("SELECT DISTINCT p FROM Project p JOIN p.areas a " +
-            "WHERE :areas IS NULL OR a.name IN :areas ORDER BY p.id ASC")
-    List<Project> findByAreas(@Param("areas") List<String> areaNames);
+    @Query("SELECT DISTINCT p FROM Project p " +
+            "LEFT JOIN p.areas a LEFT JOIN p.capacities c " +
+            "WHERE (COALESCE(:areas, null) IS NULL OR a.name IN :areas) " +
+            "AND (COALESCE(:capacities, null) IS NULL OR c.unit IN :capacities) " +
+            "ORDER BY p.id ASC")
+    List<Project> findByAreasAndCapacities(@Param("areas") List<String> areas, @Param("capacities") List<String> capacities);
 
-    @Query("SELECT DISTINCT p FROM Project p JOIN p.areas a " +
-            "WHERE :areas IS NULL OR a.name IN :areas ORDER BY p.id ASC")
-    Page<Project> findByAreasPageable(@Param("areas") List<String> areaNames, Pageable pageable);
+    @Query("SELECT DISTINCT p FROM Project p " +
+            "LEFT JOIN p.areas a LEFT JOIN p.capacities c " +
+            "WHERE (COALESCE(:areas, null) IS NULL OR a.name IN :areas) " +
+            "AND (COALESCE(:capacities, null) IS NULL OR c.unit IN :capacities) " +
+            "ORDER BY p.id ASC")
+    Page<Project> findByAreasAndCapacitiesPageable(@Param("areas") List<String> areas, @Param("capacities") List<String> capacities, Pageable pageable);
+
+    List<Project> findDistinctByAreasNameInAndCapacitiesUnitIn(List<String> areas, List<String> capacities);
 }
