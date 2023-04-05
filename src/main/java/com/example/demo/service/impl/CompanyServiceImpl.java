@@ -5,6 +5,7 @@ import static com.example.demo.util.Utils.generatePermalink;
 import com.example.demo.controller.dto.CompanyRequestDto;
 import com.example.demo.entity.Company;
 import com.example.demo.entity.Contact;
+import com.example.demo.exception.CompanyNotFoundException;
 import com.example.demo.exception.ContactNotFoundException;
 import com.example.demo.repository.CompanyRepository;
 import com.example.demo.repository.ContactRepository;
@@ -28,8 +29,12 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public Company getByPermalink(String permalink) {
-        return companyRepository.findByPermalink(permalink);
+    public Company getByPermalink(String permalink) throws CompanyNotFoundException {
+        Company company = companyRepository.findByPermalink(permalink);
+        if (company == null) {
+            throw new CompanyNotFoundException("Company [" + permalink + "] not found");
+        }
+        return company;
     }
 
     @Override

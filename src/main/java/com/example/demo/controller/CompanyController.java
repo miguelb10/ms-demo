@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.controller.dto.CompanyRequestDto;
 import com.example.demo.entity.Company;
+import com.example.demo.exception.CompanyNotFoundException;
 import com.example.demo.exception.ContactNotFoundException;
 import com.example.demo.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class CompanyController {
     }
 
     @GetMapping("/{permalink}")
-    public Company get(@PathVariable("permalink") @NotBlank @Size(min = 5, max = 99) String permalink) {
+    public Company get(@PathVariable("permalink") @NotBlank @Size(min = 5, max = 99) String permalink) throws CompanyNotFoundException {
         return companyService.getByPermalink(permalink);
     }
 

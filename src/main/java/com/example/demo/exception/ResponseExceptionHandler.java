@@ -33,7 +33,7 @@ public class ResponseExceptionHandler {
         String[] messages = detailMessage.contains(",") ? detailMessage.split(",") : new String[]{detailMessage};
 
         List<String> errors = new ArrayList<>();
-        Arrays.stream(messages).forEach(msg ->{
+        Arrays.stream(messages).forEach(msg -> {
             if (msg.contains(":")) {
                 String[] detailMessageArr = msg.split(":");
                 if (detailMessageArr.length == 2) {
@@ -63,6 +63,13 @@ public class ResponseExceptionHandler {
     public final MessageResponseDto handleProjectNotFoundException(ProjectNotFoundException exception) {
         log.error("handleProjectNotFoundException", exception.getCause());
         return new MessageResponseDto(MessageSourceUtilities.getValue("msg.error.project.not.found"));
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(CompanyNotFoundException.class)
+    public final MessageResponseDto handleCompanyNotFoundException(CompanyNotFoundException exception) {
+        log.error("handleCompanyNotFoundException", exception.getCause());
+        return new MessageResponseDto(MessageSourceUtilities.getValue("msg.error.company.not.found"));
     }
 
     @ResponseStatus(HttpStatus.GATEWAY_TIMEOUT)
