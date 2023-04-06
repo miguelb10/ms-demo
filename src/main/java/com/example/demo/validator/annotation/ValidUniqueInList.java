@@ -17,5 +17,4 @@ public @interface ValidUniqueInList {
     String message() default "msg.error.generic.duplicate.values";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
-
 }

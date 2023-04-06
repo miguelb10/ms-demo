@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "67f1ed6e-42e3-4153-86fc-3c396a128ac7",
+		"_postman_id": "346f6b8b-a039-4459-8c24-d19199888dd6",
 		"name": "Ms-demo",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -12,7 +12,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"title\": \"newproj\",\r\n    \"description\": \"prueba\"\r\n}",
+					"raw": "{\r\n    \"title\": \"project133333333334\",\r\n    \"description\": \"new project\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -42,7 +42,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"title\": \"testtt\",\r\n    \"description\": \"pruebaaaa\"\r\n}",
+					"raw": "{\r\n    \"title\": \"project 8\",\r\n    \"description\": \"pruebaaaa\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -50,7 +50,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/v1/project/7MufbIm-newproj",
+					"raw": "http://localhost:8080/v1/project/9kt6ZSjb-project4",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -59,7 +59,7 @@
 					"path": [
 						"v1",
 						"project",
-						"7MufbIm-newproj"
+						"9kt6ZSjb-project4"
 					]
 				}
 			},
@@ -71,7 +71,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/v1/project/6KZEPz2-project",
+					"raw": "http://localhost:8080/v1/project/asdf3-project3d",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -80,7 +80,7 @@
 					"path": [
 						"v1",
 						"project",
-						"6KZEPz2-project"
+						"asdf3-project3d"
 					]
 				}
 			},
@@ -110,7 +110,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/v1/project/list?areas=Chile&status=&sectors=ENERGY&stage=&capacities=m",
+					"raw": "http://localhost:8080/v1/project/list?areas=Chile,Peru&status=&sectors=ENERGY&stage=&capacities=km",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -124,7 +124,7 @@
 					"query": [
 						{
 							"key": "areas",
-							"value": "Chile"
+							"value": "Chile,Peru"
 						},
 						{
 							"key": "status",
@@ -140,7 +140,7 @@
 						},
 						{
 							"key": "capacities",
-							"value": "m"
+							"value": "km"
 						}
 					]
 				}
@@ -153,7 +153,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/v1/project/list-using-query/1?areas=Peru,Chile&capacities=km,m",
+					"raw": "http://localhost:8080/v1/project/list-using-query/0?sectors=ENERGY",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -163,12 +163,13 @@
 						"v1",
 						"project",
 						"list-using-query",
-						"1"
+						"0"
 					],
 					"query": [
 						{
 							"key": "areas",
-							"value": "Peru,Chile"
+							"value": "Peru,Chile",
+							"disabled": true
 						},
 						{
 							"key": "status",
@@ -177,8 +178,7 @@
 						},
 						{
 							"key": "sectors",
-							"value": "ENERGYD",
-							"disabled": true
+							"value": "ENERGY"
 						},
 						{
 							"key": "stage",
@@ -187,7 +187,8 @@
 						},
 						{
 							"key": "capacities",
-							"value": "km,m"
+							"value": "km,m",
+							"disabled": true
 						}
 					]
 				}
@@ -200,7 +201,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/v1/project/list-using-query?status=&sectors=ENERGY&stage=&includeAreas=false",
+					"raw": "http://localhost:8080/v1/project/list-using-query?status=&sectors=ENERGY&stage=",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -228,15 +229,6 @@
 							"key": "areas",
 							"value": "",
 							"disabled": true
-						},
-						{
-							"key": "capacities",
-							"value": "m,km",
-							"disabled": true
-						},
-						{
-							"key": "includeAreas",
-							"value": "false"
 						}
 					]
 				}
@@ -249,7 +241,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/v1/project/6KZEPz2-project",
+					"raw": "http://localhost:8080/v1/project/asdf2-project2",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -258,7 +250,7 @@
 					"path": [
 						"v1",
 						"project",
-						"6KZEPz2-project"
+						"asdf2-project2"
 					]
 				}
 			},
@@ -271,7 +263,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"title\": \"company\",\r\n    \"description\": \"company\",\r\n    \"contacts\": [1,2,3]\r\n}",
+					"raw": "{\r\n    \"title\": \"company\",\r\n    \"description\": \"company\",\r\n    \"contacts\": [1,2,6,2,3]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -300,7 +292,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/v1/company/KnGbKNu-company",
+					"raw": "http://localhost:8080/v1/company/Io855YH-company",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -309,7 +301,7 @@
 					"path": [
 						"v1",
 						"company",
-						"KnGbKNu-company"
+						"Io855YH-company"
 					]
 				}
 			},
